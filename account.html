@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account — TechWorld</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .acc-layout{ display:grid; grid-template-columns: 220px 1fr; gap: 32px; align-items:start; }
+  @media (max-width:800px){ .acc-layout{ grid-template-columns: 1fr; } }
+  .acc-side{ background:var(--white); border:1px solid var(--line); border-radius: var(--radius); padding: 10px; position:sticky; top:130px; }
+  .acc-side button{ display:flex; align-items:center; gap:10px; width:100%; text-align:left; background:none; border:0; padding:12px 14px; border-radius:8px; font-family: var(--font-display); font-weight:600; font-size:.9rem; color: var(--ink-soft); }
+  .acc-side button.active{ background: var(--navy); color:#fff; }
+  .acc-side button svg{ width:18px; height:18px; }
+  .acc-side hr{ border:none; border-top:1px solid var(--line); margin:8px 0; }
+  .order-card{ border:1px solid var(--line); border-radius: var(--radius); padding: 18px; margin-bottom:16px; }
+  .order-head{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--line); }
+  .order-track{ display:flex; justify-content:space-between; position:relative; margin: 22px 6px 6px; }
+  .order-track::before{ content:""; position:absolute; top:11px; left:0; right:0; height:2px; background:var(--line); z-index:0; }
+  .order-track .ostep{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:6px; font-family:var(--font-mono); font-size:.62rem; text-transform:uppercase; color:var(--ink-soft); flex:1; text-align:center; }
+  .order-track .dot{ width:22px; height:22px; border-radius:50%; background:#fff; border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:.65rem; }
+  .order-track .ostep.done .dot{ background: var(--tech-blue); border-color: var(--tech-blue); color:var(--navy); }
+  .order-track .ostep.done{ color:var(--navy); }
+  .addr-card{ border:1px solid var(--line); border-radius: var(--radius); padding:16px; margin-bottom:12px; }
+  .profile-avatar{ width:64px; height:64px; border-radius:50%; background: var(--navy); color:#fff; font-family:var(--font-display); font-weight:700; font-size:1.4rem; display:flex; align-items:center; justify-content:center; }
+</style>
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<div class="container">
+  <nav class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span class="current">My Account</span></nav>
+</div>
+
+<section class="section" style="padding-top:10px;">
+  <div class="container" id="loginGate" style="display:none;">
+    <div class="empty-state">
+      <div style="width:64px;height:64px;color:var(--line);margin:0 auto 18px;" id="gateIcon"></div>
+      <h3>Log in to view your account</h3>
+      <p>Track orders, manage addresses, and view your wishlist once you're logged in.</p>
+      <a href="login.html" class="btn btn-primary">Log in / Register</a>
+    </div>
+  </div>
+
+  <div class="container acc-layout" id="accContent" style="display:none;">
+    <aside class="acc-side">
+      <button class="active" data-tab="profile">Profile</button>
+      <button data-tab="orders">Orders</button>
+      <button data-tab="addresses">Addresses</button>
+      <button data-tab="wishlist">Wishlist</button>
+      <hr>
+      <button id="logoutBtn" style="color:var(--danger)">Log out</button>
+    </aside>
+    <div>
+      <div class="tab-panel active" id="panel-profile"></div>
+      <div class="tab-panel" id="panel-orders"></div>
+      <div class="tab-panel" id="panel-addresses"></div>
+      <div class="tab-panel" id="panel-wishlist"></div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="js/icons.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script src="js/account-page.js"></script>
+</body>
+</html>

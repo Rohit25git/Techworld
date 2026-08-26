@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechWorld — Smartphones, Laptops, Audio & Accessories</title>
+<meta name="description" content="TechWorld is your one-stop electronics store for smartphones, laptops, audio devices, smartwatches and tech accessories.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <div class="eyebrow">New arrivals weekly</div>
+      <h1>Tech that keeps up with <em>you.</em></h1>
+      <p class="hero-lede">Smartphones, laptops, audio and everyday accessories — hand-picked, stress-tested, and shipped in 48 hours. Everything you need to build your setup, in one place.</p>
+      <div class="hero-actions">
+        <a href="products.html" class="btn btn-primary">Shop all products</a>
+        <a href="products.html?deal=1" class="btn btn-outline on-dark">View today's deals</a>
+      </div>
+      <div class="hero-stats">
+        <div><span class="num">1,200+</span><span class="label">Products</span></div>
+        <div><span class="num">50K+</span><span class="label">Customers</span></div>
+        <div><span class="num">4.8/5</span><span class="label">Avg. rating</span></div>
+      </div>
+    </div>
+    <div class="hero-visual" id="heroVisual"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Browse by category</div>
+        <h2>Shop the collection</h2>
+      </div>
+    </div>
+    <div class="category-grid" id="categoryGrid"></div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Handpicked</div>
+        <h2>Featured products</h2>
+      </div>
+      <a href="products.html" class="btn btn-ghost">View all products →</a>
+    </div>
+    <div class="product-grid" id="featuredGrid"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Limited time</div>
+        <h2>Today's deals</h2>
+      </div>
+      <a href="products.html?deal=1" class="btn btn-ghost">See all deals</a>
+    </div>
+    <div class="product-grid" id="dealsGrid"></div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <div class="category-grid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="category-card" style="cursor:default">
+        <div class="cat-icon" id="ic-truck"></div>
+        <h4>Free shipping</h4>
+        <span>On orders over ₹2,000</span>
+      </div>
+      <div class="category-card" style="cursor:default">
+        <div class="cat-icon" id="ic-shield"></div>
+        <h4>1-year warranty</h4>
+        <span>On every product</span>
+      </div>
+      <div class="category-card" style="cursor:default">
+        <div class="cat-icon" id="ic-lock"></div>
+        <h4>Secure checkout</h4>
+        <span>Encrypted payments</span>
+      </div>
+      <div class="category-card" style="cursor:default">
+        <div class="cat-icon" id="ic-clock"></div>
+        <h4>24/7 support</h4>
+        <span>Real humans, always on</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card-panel" style="background:linear-gradient(120deg, var(--navy), var(--navy-soft)); border:none; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; padding:40px;">
+      <div style="max-width:480px">
+        <div class="spec-strip on-dark" style="margin-bottom:10px"><span>Stay updated</span></div>
+        <h2 style="color:#fff; margin-bottom:6px;">Get deal alerts in your inbox</h2>
+        <p style="color:rgba(255,255,255,.65); margin:0;">One email a week. New launches, price drops, no spam.</p>
+      </div>
+      <form id="newsletterForm" style="display:flex; gap:10px; flex-wrap:wrap;">
+        <input type="email" required placeholder="you@email.com" style="padding:13px 16px; border-radius:6px; border:1.5px solid rgba(255,255,255,.2); background:rgba(255,255,255,.08); color:#fff; min-width:240px;">
+        <button class="btn btn-primary" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="js/icons.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Hero visual cards
+    const heroPicks = [getProductById("p01"), getProductById("l01")];
+    document.getElementById("heroVisual").innerHTML = heroPicks.map(p => `
+      <div class="hero-card">
+        <div class="device-icon">${icon(p.icon)}</div>
+        <h4>${p.name}</h4>
+        <div class="price">${formatCurrency(p.price)}</div>
+      </div>`).join("");
+
+    // Categories
+    document.getElementById("categoryGrid").innerHTML = CATEGORIES.map(c => `
+      <a class="category-card" href="products.html?category=${c.id}">
+        <div class="cat-icon">${icon(c.icon)}</div>
+        <h4>${c.name}</h4>
+        <span>${c.desc}</span>
+      </a>`).join("");
+
+    // Featured (bestsellers first, fill to 8)
+    const featured = [...PRODUCTS].sort((a,b)=> (b.badge==="best")-(a.badge==="best") || b.rating-a.rating).slice(0,8);
+    const featuredGrid = document.getElementById("featuredGrid");
+    featuredGrid.innerHTML = featured.map(productCardHTML).join("");
+    wireProductGridEvents(featuredGrid);
+
+    // Deals
+    const deals = PRODUCTS.filter(p => p.oldPrice).sort((a,b)=> (b.oldPrice-b.price)/b.oldPrice - (a.oldPrice-a.price)/a.oldPrice).slice(0,8);
+    const dealsGrid = document.getElementById("dealsGrid");
+    dealsGrid.innerHTML = deals.map(productCardHTML).join("");
+    wireProductGridEvents(dealsGrid);
+
+    // Trust icons
+    document.getElementById("ic-truck").innerHTML = icon("truck");
+    document.getElementById("ic-shield").innerHTML = icon("shield");
+    document.getElementById("ic-lock").innerHTML = icon("lock");
+    document.getElementById("ic-clock").innerHTML = icon("clock");
+
+    document.getElementById("newsletterForm").addEventListener("submit", (e)=>{
+      e.preventDefault();
+      showToast("Subscribed! Watch your inbox for deals.");
+      e.target.reset();
+    });
+  });
+</script>
+</body>
+</html>

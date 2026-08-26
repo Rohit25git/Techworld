@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — TechWorld</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .checkout-layout{ display:grid; grid-template-columns: 1fr 360px; gap:32px; align-items:start; }
+  @media (max-width:900px){ .checkout-layout{ grid-template-columns:1fr; } }
+  .co-section{ margin-bottom:20px; }
+  .co-section.disabled{ opacity:.45; pointer-events:none; }
+  .pay-option{ display:flex; align-items:center; gap:12px; border:1.5px solid var(--line); border-radius:8px; padding:14px 16px; margin-bottom:10px; cursor:pointer; }
+  .pay-option input{ accent-color: var(--tech-blue); width:16px; height:16px; }
+  .pay-option.selected{ border-color: var(--tech-blue); background: rgba(0,180,216,.05); }
+  .pay-option svg{ width:20px; height:20px; color:var(--navy); }
+  .co-summary-item .sm-name{ flex:1; color:var(--navy); }
+  .confirm-panel{ text-align:center; padding: 40px 20px; }
+  .confirm-panel svg{ width:64px; height:64px; color: var(--success); margin:0 auto 16px; }
+  .track-line{ display:flex; justify-content:space-between; max-width:520px; margin:30px auto 0; position:relative; }
+  .track-line::before{ content:""; position:absolute; top:14px; left:0; right:0; height:2px; background:var(--line); z-index:0; }
+  .track-step{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:8px; font-family:var(--font-mono); font-size:.68rem; text-transform:uppercase; color:var(--ink-soft); flex:1; }
+  .track-step .dot{ width:28px; height:28px; border-radius:50%; background:var(--white); border:2px solid var(--line); display:flex; align-items:center; justify-content:center; color:var(--line); }
+  .track-step.done .dot{ background:var(--tech-blue); border-color:var(--tech-blue); color:var(--navy); }
+  .track-step.done{ color: var(--navy); }
+</style>
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<div class="container">
+  <nav class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><a href="cart.html">Cart</a><span class="sep">/</span><span class="current">Checkout</span></nav>
+</div>
+
+<section class="section" style="padding-top:10px;">
+  <div class="container">
+
+    <div class="step-track" id="stepTrack">
+      <div class="step done"><span class="num">✓</span> Cart</div>
+      <div class="line"></div>
+      <div class="step active" id="stepShippingTab"><span class="num">2</span> Shipping</div>
+      <div class="line"></div>
+      <div class="step" id="stepPaymentTab"><span class="num">3</span> Payment</div>
+      <div class="line"></div>
+      <div class="step" id="stepConfirmTab"><span class="num">4</span> Confirmation</div>
+    </div>
+
+    <div id="checkoutEmpty" style="display:none" class="empty-state">
+      <h3>Your cart is empty</h3>
+      <p>Add a few products before checking out.</p>
+      <a href="products.html" class="btn btn-primary">Browse products</a>
+    </div>
+
+    <div id="checkoutFlow" class="checkout-layout">
+      <div>
+        <div class="card-panel co-section" id="shippingSection">
+          <h3>Shipping address</h3>
+          <form id="shippingForm">
+            <div class="form-row">
+              <div class="form-group"><label>Full name</label><input type="text" id="fullName" required></div>
+              <div class="form-group"><label>Phone number</label><input type="tel" id="phone" required pattern="[0-9]{10}" placeholder="10-digit number"></div>
+            </div>
+            <div class="form-group"><label>Address line</label><input type="text" id="addr1" required placeholder="House no., street, area"></div>
+            <div class="form-row">
+              <div class="form-group"><label>City</label><input type="text" id="city" required></div>
+              <div class="form-group"><label>State</label><input type="text" id="stateField" required></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>PIN code</label><input type="text" id="pincode" required pattern="[0-9]{6}" placeholder="6-digit PIN"></div>
+              <div class="form-group"><label>Address type</label>
+                <select id="addrType"><option>Home</option><option>Work</option><option>Other</option></select>
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Save & continue to payment</button>
+          </form>
+        </div>
+
+        <div class="card-panel co-section disabled" id="paymentSection">
+          <h3>Payment method</h3>
+          <label class="pay-option" data-pay="card">
+            <input type="radio" name="payMethod" value="card">
+            <span>Credit / Debit Card</span>
+          </label>
+          <div id="cardFields" style="display:none; padding: 4px 0 14px 30px;">
+            <div class="form-group"><label>Card number</label><input type="text" id="cardNumber" maxlength="19" placeholder="1234 5678 9012 3456"></div>
+            <div class="form-row">
+              <div class="form-group"><label>Expiry</label><input type="text" id="cardExpiry" maxlength="5" placeholder="MM/YY"></div>
+              <div class="form-group"><label>CVV</label><input type="text" id="cardCvv" maxlength="3" placeholder="•••"></div>
+            </div>
+          </div>
+
+          <label class="pay-option" data-pay="upi">
+            <input type="radio" name="payMethod" value="upi">
+            <span>UPI</span>
+          </label>
+          <div id="upiFields" style="display:none; padding: 4px 0 14px 30px;">
+            <div class="form-group"><label>UPI ID</label><input type="text" id="upiId" placeholder="yourname@bank"></div>
+          </div>
+
+          <label class="pay-option" data-pay="cod">
+            <input type="radio" name="payMethod" value="cod">
+            <span>Cash on Delivery</span>
+          </label>
+
+          <button class="btn btn-primary btn-block" id="placeOrderBtn" style="margin-top:14px;">Place order</button>
+          <p class="small center" style="margin-top:10px;">🔒 Payments are simulated — no real transaction is processed.</p>
+        </div>
+
+        <div class="card-panel" id="confirmSection" style="display:none"></div>
+      </div>
+
+      <div class="card-panel" id="orderSummaryPanel">
+        <h3>Order summary</h3>
+        <div id="summaryItems"></div>
+        <div id="summaryTotals"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="js/icons.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script src="js/checkout-page.js"></script>
+</body>
+</html>

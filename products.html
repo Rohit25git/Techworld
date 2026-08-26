@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop All Products — TechWorld</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<div class="container">
+  <nav class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span class="current" id="crumbLabel">Shop</span></nav>
+</div>
+
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="listing-layout">
+      <aside class="filters">
+        <h3>Filters</h3>
+        <div id="activeFilters" class="active-filters"></div>
+
+        <div class="filter-group">
+          <h4>Category</h4>
+          <div id="categoryFilters"></div>
+        </div>
+
+        <div class="filter-group">
+          <h4>Brand</h4>
+          <div id="brandFilters" style="max-height:220px; overflow-y:auto;"></div>
+        </div>
+
+        <div class="filter-group">
+          <h4>Price range</h4>
+          <div class="price-range">
+            <input type="number" id="minPrice" placeholder="Min">
+            <span>–</span>
+            <input type="number" id="maxPrice" placeholder="Max">
+          </div>
+          <button class="btn btn-outline btn-sm btn-block" id="applyPrice" style="margin-top:10px;">Apply</button>
+        </div>
+
+        <div class="filter-group">
+          <h4>Rating</h4>
+          <div id="ratingFilters"></div>
+        </div>
+
+        <button class="btn btn-ghost btn-sm btn-block" id="clearFilters">Clear all filters</button>
+      </aside>
+
+      <div>
+        <div class="listing-toolbar">
+          <span class="result-count" id="resultCount">Showing 0 products</span>
+          <select class="sort-select" id="sortSelect">
+            <option value="relevance">Sort: Relevance</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Avg. Customer Rating</option>
+            <option value="newest">Newest Arrivals</option>
+          </select>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+        <div class="empty-state" id="emptyState" style="display:none">
+          <div id="emptyIcon"></div>
+          <h3>No products match your filters</h3>
+          <p>Try widening your price range or clearing a filter.</p>
+          <button class="btn btn-outline" id="emptyClear">Clear all filters</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="js/icons.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script src="js/products-page.js"></script>
+</body>
+</html>

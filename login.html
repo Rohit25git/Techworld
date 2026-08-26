@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login or Register — TechWorld</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .auth-wrap{ max-width: 440px; margin: 0 auto; }
+  .auth-toggle{ display:flex; background: var(--surface-alt); border-radius: 8px; padding:4px; margin-bottom: 28px; }
+  .auth-toggle button{ flex:1; border:0; background:none; padding:10px; border-radius:6px; font-family: var(--font-display); font-weight:600; color: var(--ink-soft); }
+  .auth-toggle button.active{ background: var(--white); color: var(--navy); box-shadow: var(--shadow-sm); }
+  .pw-wrap{ position:relative; }
+  .pw-wrap button{ position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:0; color:var(--ink-soft); width:18px; height:18px; }
+  .auth-form{ display:none; }
+  .auth-form.active{ display:block; }
+</style>
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<section class="section">
+  <div class="container auth-wrap">
+    <div class="card-panel">
+      <div class="eyebrow center" style="justify-content:center;">Welcome to TechWorld</div>
+      <h2 class="center">Access your account</h2>
+      <div class="auth-toggle">
+        <button id="tabLogin" class="active">Log in</button>
+        <button id="tabRegister">Create account</button>
+      </div>
+
+      <form id="loginForm" class="auth-form active">
+        <div class="form-group"><label>Email</label><input type="email" id="loginEmail" required placeholder="you@email.com"></div>
+        <div class="form-group">
+          <label>Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="loginPassword" required minlength="6" placeholder="••••••••">
+            <button type="button" data-toggle="loginPassword"></button>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Log in</button>
+        <p class="small center" style="margin-top:14px;">Demo store — any email + 6-character password works.</p>
+      </form>
+
+      <form id="registerForm" class="auth-form">
+        <div class="form-group"><label>Full name</label><input type="text" id="regName" required></div>
+        <div class="form-group"><label>Email</label><input type="email" id="regEmail" required></div>
+        <div class="form-group">
+          <label>Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="regPassword" required minlength="6" placeholder="At least 6 characters">
+            <button type="button" data-toggle="regPassword"></button>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Create account</button>
+        <p class="small center" style="margin-top:14px;">By creating an account you agree to our (demo) Terms & Privacy Policy.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="js/icons.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", ()=>{
+    if (Store.getUser()){ window.location.href = "account.html"; return; }
+
+    const tabLogin = document.getElementById("tabLogin");
+    const tabRegister = document.getElementById("tabRegister");
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+
+    tabLogin.addEventListener("click", ()=>{
+      tabLogin.classList.add("active"); tabRegister.classList.remove("active");
+      loginForm.classList.add("active"); registerForm.classList.remove("active");
+    });
+    tabRegister.addEventListener("click", ()=>{
+      tabRegister.classList.add("active"); tabLogin.classList.remove("active");
+      registerForm.classList.add("active"); loginForm.classList.remove("active");
+    });
+
+    document.querySelectorAll("[data-toggle]").forEach(btn=>{
+      btn.innerHTML = icon("eye");
+      btn.addEventListener("click", ()=>{
+        const input = document.getElementById(btn.dataset.toggle);
+        const show = input.type === "password";
+        input.type = show ? "text" : "password";
+        btn.innerHTML = icon(show ? "eyeOff" : "eye");
+      });
+    });
+
+    loginForm.addEventListener("submit", (e)=>{
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      Store.setUser({ name: email.split("@")[0], email, joined: new Date().toISOString() });
+      showToast("Logged in successfully");
+      setTimeout(()=> window.location.href = "account.html", 500);
+    });
+
+    registerForm.addEventListener("submit", (e)=>{
+      e.preventDefault();
+      const name = document.getElementById("regName").value;
+      const email = document.getElementById("regEmail").value;
+      Store.setUser({ name, email, joined: new Date().toISOString() });
+      showToast("Account created — welcome!");
+      setTimeout(()=> window.location.href = "account.html", 500);
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — TechWorld</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .about-hero{ background: linear-gradient(180deg, var(--navy), var(--navy-deep)); color:#fff; padding: 60px 0; }
+  .about-hero .container{ max-width: 780px; }
+  .value-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:20px; }
+  @media (max-width:800px){ .value-grid{ grid-template-columns: 1fr 1fr; } }
+  .value-card{ padding:26px 22px; border:1px solid var(--line); border-radius: var(--radius); }
+  .value-card .cat-icon{ margin:0 0 14px; }
+  .team-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:22px; }
+  @media (max-width:800px){ .team-grid{ grid-template-columns: 1fr 1fr; } }
+  .team-card{ text-align:center; }
+  .team-avatar{ width:96px; height:96px; border-radius:50%; margin:0 auto 14px; background: linear-gradient(135deg, var(--navy), var(--tech-blue)); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:1.6rem; }
+  .timeline{ position:relative; padding-left: 28px; }
+  .timeline::before{ content:""; position:absolute; left:6px; top:6px; bottom:6px; width:2px; background:var(--line); }
+  .tl-item{ position:relative; padding-bottom: 28px; }
+  .tl-item::before{ content:""; position:absolute; left:-28px; top:4px; width:12px; height:12px; border-radius:50%; background: var(--tech-blue); border:3px solid var(--white); box-shadow:0 0 0 2px var(--tech-blue); }
+  .tl-year{ font-family:var(--font-mono); color:var(--tech-blue); font-size:.78rem; letter-spacing:.05em; }
+</style>
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<section class="about-hero">
+  <div class="container">
+    <div class="eyebrow" style="color:var(--tech-blue-light)">Our story</div>
+    <h1 style="color:#fff;">We started TechWorld because buying tech shouldn't feel like a gamble.</h1>
+    <p style="color:rgba(255,255,255,.7); font-size:1.05rem; max-width:620px;">Confusing specs, inflated prices, and no one to call when something breaks — we built the store we wished existed when we were students hunting for our first laptop.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container two-col">
+    <div>
+      <div class="eyebrow">Our mission</div>
+      <h2>Make good tech easy to find, and easy to trust.</h2>
+      <p>TechWorld curates smartphones, laptops, audio gear and everyday accessories from brands we'd recommend to our own families. Every listing is checked for accurate specs, honest pricing, and real stock — no surprises at checkout.</p>
+      <p>We're a small team, but we sweat the details: clear return policies, fast shipping, and support that actually picks up.</p>
+    </div>
+    <div>
+      <div class="eyebrow">Where we're headed</div>
+      <h2>A store that grows with your setup.</h2>
+      <p>Today that means a tight catalog across four categories. Next, it means smarter recommendations, trade-in programs, and same-day delivery in more cities — always without losing the plain-spoken pricing we started with.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <div class="section-head"><div><div class="eyebrow">What we stand for</div><h2>Our values</h2></div></div>
+    <div class="value-grid">
+      <div class="value-card"><div class="cat-icon"></div><h4 id="vTitle1"></h4><p id="vDesc1"></p></div>
+      <div class="value-card"><div class="cat-icon"></div><h4 id="vTitle2"></h4><p id="vDesc2"></p></div>
+      <div class="value-card"><div class="cat-icon"></div><h4 id="vTitle3"></h4><p id="vDesc3"></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container two-col">
+    <div>
+      <div class="eyebrow">Milestones</div>
+      <h2>How we got here</h2>
+      <div class="timeline" id="timelineWrap"></div>
+    </div>
+    <div>
+      <div class="eyebrow">The people behind it</div>
+      <h2>Meet the team</h2>
+      <div class="team-grid" id="teamGrid"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container center">
+    <h2>Have a question before you buy?</h2>
+    <p style="max-width:480px; margin:0 auto 20px;">We're happy to help you pick the right product, or sort out anything after your order.</p>
+    <a href="contact.html" class="btn btn-primary">Contact us</a>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="js/icons.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", ()=>{
+    const values = [
+      { icon:"target", title:"Accuracy first", desc:"Specs, stock and pricing are verified before anything goes live — what you see is what you get." },
+      { icon:"truck", title:"Fast, honest delivery", desc:"Real timelines, not best-case guesses. Free shipping over ₹2,000, always tracked." },
+      { icon:"phoneCall", title:"Support that answers", desc:"A real team behind live chat, email and phone — no bots pretending to be people." }
+    ];
+    values.forEach((v,i)=>{
+      document.querySelectorAll(".value-card .cat-icon")[i].innerHTML = icon(v.icon);
+      document.getElementById("vTitle"+(i+1)).textContent = v.title;
+      document.getElementById("vDesc"+(i+1)).textContent = v.desc;
+    });
+
+    const milestones = [
+      { year:"2021", text:"TechWorld launches as a two-person operation selling refurbished laptops." },
+      { year:"2022", text:"Expanded into smartphones and audio; crossed 10,000 orders shipped." },
+      { year:"2024", text:"Opened our accessories line and introduced 1-year warranty on every product." },
+      { year:"2026", text:"Now serving 50,000+ customers across categories, with same-week delivery in major cities." }
+    ];
+    document.getElementById("timelineWrap").innerHTML = milestones.map(m => `
+      <div class="tl-item"><div class="tl-year">${m.year}</div><p style="margin:4px 0 0;">${m.text}</p></div>`).join("");
+
+    const team = [
+      { name:"Ananya Rao", role:"Founder & CEO" },
+      { name:"Karan Mehta", role:"Head of Product" },
+      { name:"Divya Shah", role:"Customer Experience" },
+      { name:"Rahul Verma", role:"Logistics Lead" }
+    ];
+    document.getElementById("teamGrid").innerHTML = team.map(t => `
+      <div class="team-card">
+        <div class="team-avatar">${t.name.split(" ").map(n=>n[0]).join("")}</div>
+        <h4 style="margin:0 0 2px;">${t.name}</h4>
+        <p class="small" style="margin:0;">${t.role}</p>
+      </div>`).join("");
+  });
+</script>
+</body>
+</html>
