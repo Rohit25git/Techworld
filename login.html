@@ -6,7 +6,7 @@
 <title>Login or Register — TechWorld</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="style.css">
 <style>
   .auth-wrap{ max-width: 440px; margin: 0 auto; }
   .auth-toggle{ display:flex; background: var(--surface-alt); border-radius: 8px; padding:4px; margin-bottom: 28px; }
@@ -64,9 +64,9 @@
 
 <div id="footer-placeholder"></div>
 
-<script src="js/icons.js"></script>
-<script src="js/data.js"></script>
-<script src="js/main.js"></script>
+<script src="icons.js"></script>
+<script src="data.js"></script>
+<script src="main.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", ()=>{
     if (Store.getUser()){ window.location.href = "account.html"; return; }
